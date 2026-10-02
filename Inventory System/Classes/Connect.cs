@@ -13,9 +13,12 @@ namespace Inventory_System.Classes
         private readonly static string con = AppSettings.ConnectionString;
         SqlCommand cm = new SqlCommand();
         SqlDataReader dr;
+        // Connections opened through this instance, so CloseConnection can close them.
+        private readonly List<SqlConnection> openConnections = new List<SqlConnection>();
         public SqlConnection EstablishConnection(string fullname)
         {
             SqlConnection connect = new SqlConnection(con);
+            openConnections.Add(connect);
             try
             {
                 if (!String.IsNullOrEmpty(fullname))
@@ -57,6 +60,7 @@ namespace Inventory_System.Classes
         public SqlConnection Login()
         {
             SqlConnection connect = new SqlConnection(con);
+            openConnections.Add(connect);
             try
             {
                 connect.Open();
@@ -71,9 +75,15 @@ namespace Inventory_System.Classes
         }
         public SqlConnection CloseConnection()
         {
-            SqlConnection connect = new SqlConnection(con);
-            connect.Close();
-            return connect;
+            SqlConnection last = null;
+            foreach (var connect in openConnections)
+            {
+                connect.Close();
+                connect.Dispose();
+                last = connect;
+            }
+            openConnections.Clear();
+            return last;
         }
     }
 }
