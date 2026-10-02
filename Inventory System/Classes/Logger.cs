@@ -12,6 +12,7 @@ namespace Inventory_System.Classes
     public class Logger
     {
         private static readonly string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logfile.txt");
+        /// <summary>Records an action in the shared Log table on the server.</summary>
         public static void WriteAllLog(string fullname, string message)
         {
             Connect connect = new Connect();
@@ -32,6 +33,7 @@ namespace Inventory_System.Classes
                 connect.CloseConnection();
             }
         }
+        /// <summary>Appends to logfile.txt next to the exe, which still works when the server is unreachable.</summary>
         public static void WriteUserLog(string fullname, string message)
         {
             using (StreamWriter writer = new StreamWriter(logFilePath, true))

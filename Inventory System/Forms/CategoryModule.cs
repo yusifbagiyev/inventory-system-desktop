@@ -13,6 +13,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Dialog that adds or renames a category, depending on whether Save or Update is shown.</summary>
     public partial class CategoryModule : Form
     {
         private readonly Connect connect = new Connect();
@@ -139,6 +140,7 @@ namespace Inventory_System.Forms
                 txtCatName.Text = "";
             }
         }
+        // Lets the borderless dialog be dragged by its body
         private void CategoryModule_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Department list page with a search box and edit and delete buttons on each row.</summary>
     public partial class Department : Form
     {
         private readonly Connect connect = new Connect();
@@ -29,6 +30,7 @@ namespace Inventory_System.Forms
             try
             {
                 dgvDepartment.Rows.Clear();
+                // The search box holds its placeholder as text, and that text means no filter
                 string searchText = txtSearch.Text == "Search in . . . " || txtSearch.Text == "Поиск в . . . " ? "" : txtSearch.Text;
                 string query = "SELECT * FROM Department";
                 if (!string.IsNullOrEmpty(searchText))
@@ -64,6 +66,7 @@ namespace Inventory_System.Forms
                 txtTotal.Text = dgvDepartment.Rows.Count.ToString();
             }
         }
+        // The grid shows no ids, so the id is looked up by department name
         private string LoadID(string text)
         {
             try
@@ -134,6 +137,7 @@ namespace Inventory_System.Forms
             }
         }
         private void dgvDepartment_CellContentClick(object sender, DataGridViewCellEventArgs e) => _ = EditDeparment(sender, e);
+        // One dialog both adds and edits, so the unused button is hidden and the others take its place
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             DepartmentModule DepartmentForm = new DepartmentModule(lblFullname.Text, lblLanguage.Text);

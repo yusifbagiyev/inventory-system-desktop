@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>All-products page with search and a PDF export, where any user may edit but only admins delete.</summary>
     public partial class TheProducts : Form
     {
         private readonly Connect connect = new Connect();
@@ -233,6 +234,7 @@ namespace Inventory_System.Forms
                             {
                                 foreach (DataGridViewCell dcell in viewRow.Cells)
                                 {
+                                    // Icon cells hold a Bitmap and their columns have no header, so both stay out of the PDF
                                     if (dcell.Value.ToString() != "System.Drawing.Bitmap")
                                     {
                                         pTable.AddCell(dcell.Value.ToString());

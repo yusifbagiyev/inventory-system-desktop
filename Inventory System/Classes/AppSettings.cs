@@ -13,7 +13,7 @@ namespace Inventory_System.Classes
         public static string ServerHost =>
             new System.Data.SqlClient.SqlConnectionStringBuilder(ConnectionString).DataSource.Split('\\', ',')[0];
 
-        /// <summary>AES key for stored user passwords. It must be 16, 24 or 32 characters long.</summary>
+        /// <summary>AES key for stored user passwords, which must be 16, 24 or 32 characters long.</summary>
         public static string PasswordKey =>
             ConfigurationManager.AppSettings["PasswordKey"]
             ?? throw new ConfigurationErrorsException("Setting 'PasswordKey' is missing in App.config.");

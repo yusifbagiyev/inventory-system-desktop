@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Dialog that adds or edits a department, depending on whether Save or Update is shown.</summary>
     public partial class DepartmentModule : Form
     {
         private readonly Connect connect = new Connect();
@@ -26,6 +27,7 @@ namespace Inventory_System.Forms
             lblLanguage.Text = language;
             this.KeyPreview = true;
         }
+        // Optional fields still showing their placeholder are saved empty
         private async Task ClearItems()
         {
             if (txtDepHead.Text == "Head of Department" || txtDepHead.Text == "Начальник отдела")
@@ -154,6 +156,7 @@ namespace Inventory_System.Forms
             _ = Clear();
         }
         #region Design
+        // Lets the borderless dialog be dragged by its body
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]

@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Dialog that adds a user or changes one's name, password and role.</summary>
     public partial class UserModule : Form
     {
         private readonly Connect connect = new Connect();
@@ -227,6 +228,7 @@ namespace Inventory_System.Forms
                 cmbUsertype.Text = "";
             }
         }
+        // Lets the borderless dialog be dragged by its body
         private void UserModule_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();

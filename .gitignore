@@ -9,10 +9,10 @@ publish/
 *.user
 *.suo
 
-# NuGet packages (restored from packages.config)
+# NuGet packages, restored from packages.config
 packages/
 
-# Third-party DLL that is not on NuGet (see README)
+# Third-party DLL that is not on NuGet, the README says where it goes
 lib/*.dll
 
 # Signing keys and local secrets

@@ -1,5 +1,4 @@
--- Fictional demo data. The passwords use the sample PasswordKey, so sign in as admin / Demo-Admin-2024 or operator / Demo-User-2024.
--- With a different PasswordKey these logins fail, so add the users again in the app under Users > Add.
+-- Fictional demo data whose users only sign in with the sample PasswordKey, so re-add them under any other key
 
 INSERT INTO dbo.Category (catname) VALUES
  (N'Notebook'), (N'Monitor'), (N'Printer'), (N'Router'), (N'Switch'), (N'IP Telephone'), (N'Access Control'), (N'UPS');

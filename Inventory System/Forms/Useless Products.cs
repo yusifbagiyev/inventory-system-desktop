@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Page listing products written off as useless, with search and a PDF export.</summary>
     public partial class UselessProduct : Form
     {
         private readonly Connect connect = new Connect();
@@ -33,7 +34,7 @@ namespace Inventory_System.Forms
             {
                 dgvProduct.Rows.Clear();
                 string searchText = txtSearch.Text == "Search in . . . " || txtSearch.Text == "Поиск в . . . " ? "" : txtSearch.Text;
-                // A useless product's code starts with *.
+                // A useless product's code starts with *
                 string query = "SELECT * FROM Product WHERE prodCode LIKE '*%'";
                 if (!string.IsNullOrEmpty(searchText))
                 {
@@ -116,6 +117,7 @@ namespace Inventory_System.Forms
                             {
                                 foreach (DataGridViewCell dcell in viewRow.Cells)
                                 {
+                                    // Icon cells hold a Bitmap and their columns have no header, so both stay out of the PDF
                                     if (dcell.Value.ToString() != "System.Drawing.Bitmap")
                                     {
                                         pTable.AddCell(dcell.Value.ToString());

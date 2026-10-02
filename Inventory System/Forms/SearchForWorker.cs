@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Lists the products held by a worker and narrows them down by category, vendor and model in turn.</summary>
     public partial class SearchForWorker : Form
     {
         private readonly Connect connect = new Connect();
@@ -55,6 +56,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Fills the category list from the worker of the products in the grid.</summary>
         private async Task CountofProducts()
         {
             try
@@ -82,6 +84,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Fills the vendor list for the chosen category of that worker's products.</summary>
         private async Task CountofProductsforVendor()
         {
             try
@@ -109,6 +112,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Fills the model list for the chosen category and vendor of that worker's products.</summary>
         private async Task CountofProductsforModel()
         {
             try
@@ -336,6 +340,7 @@ namespace Inventory_System.Forms
                             {
                                 foreach (DataGridViewCell dcell in viewRow.Cells)
                                 {
+                                    // Icon cells hold a Bitmap and their columns have no header, so both stay out of the PDF
                                     if (dcell.Value.ToString() != "System.Drawing.Bitmap")
                                     {
                                         pTable.AddCell(dcell.Value.ToString());

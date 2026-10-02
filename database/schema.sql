@@ -1,5 +1,4 @@
--- SQL Server schema for Inventory System, rebuilt from the tables the application uses.
--- Run it inside an empty database, for example one made with CREATE DATABASE InventoryDb.
+-- SQL Server schema rebuilt from the tables the app uses, meant to run inside an empty database
 
 CREATE TABLE dbo.Category (
     catId    INT IDENTITY(1,1) PRIMARY KEY,
@@ -14,7 +13,7 @@ CREATE TABLE dbo.Department (
     ddesc    NVARCHAR(600) NULL
 );
 
--- Products point at their category and department by name, not by id.
+-- Products point at their category and department by name, not by id
 CREATE TABLE dbo.Product (
     ID           INT IDENTITY(1,1) PRIMARY KEY,
     prodCode     NVARCHAR(100) NOT NULL,   -- Inventory code printed on the label
@@ -26,7 +25,7 @@ CREATE TABLE dbo.Product (
     pdescription NVARCHAR(600) NULL
 );
 
--- Every move of a product between departments and workers. Together they are the product's history.
+-- Every move of a product between departments and workers, which together make up its history
 CREATE TABLE dbo.Route (
     RouteId     INT IDENTITY(1,1) PRIMARY KEY,
     prodCode    NVARCHAR(100) NOT NULL,

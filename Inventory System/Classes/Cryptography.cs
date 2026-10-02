@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace Inventory_System.Classes
 {
+    /// <summary>AES encryption for the passwords stored in the Users table.</summary>
     internal class Cryptography
     {
         public static string EncryptString(string key, string plainText)
         {
+            // Sign-in matches the encrypted input against the stored value in SQL, which needs a fixed IV
             byte[] iv = new byte[16];
             byte[] array;
 

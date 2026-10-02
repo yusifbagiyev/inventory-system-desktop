@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Main window whose side menu opens each page as a child form inside the main panel.</summary>
     public partial class Main_Menu : Form
     {
         private readonly Connect connect = new Connect();
@@ -35,6 +36,7 @@ namespace Inventory_System.Forms
             this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
         }
+        /// <summary>Turns a child form's Text into the page title shown in the top bar.</summary>
         private async Task ChangeFormName(string childForm)
         {
             if (childForm == "İnformation")
@@ -140,6 +142,7 @@ namespace Inventory_System.Forms
                     childForm.BringToFront();
                     childForm.Show();
                 }
+                // Clicking menu items in quick succession can try to show a form the next click already closed
                 catch (ObjectDisposedException)
                 {
                     MessageBox.Show("Be patient. Please click one by one : ", "Object is disposed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -170,6 +173,7 @@ namespace Inventory_System.Forms
             btnSettings.Location = new Point(35, 441);
             await Task.Delay(10);
         }
+        // Products opens a sub-menu, so every button below it moves down to make room
         private async Task ExpandPanelConf()
         {
             panelProducts.Visible = true;
@@ -195,6 +199,7 @@ namespace Inventory_System.Forms
             btnSettings.Location = new Point(35, 579);
             await Task.Delay(10);
         }
+        // Thin buttons are the bars beside the menu that mark the open page
         private async Task NotVisibleThinButton()
         {
             btnLeftThinButton_Products.Visible = false;
@@ -205,7 +210,7 @@ namespace Inventory_System.Forms
             btnLeftThin_Settings.Visible = false;
             await Task.Delay(10);
         }
-        // Lets the borderless window be dragged by its body or top bar.
+        // Lets the borderless window be dragged by its body or top bar
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
@@ -277,6 +282,7 @@ namespace Inventory_System.Forms
             CloseActiveForm();
             await OpenChildForm(new Forms.Routes(lblUser.Text, lblFullname.Text, lblLanguage.Text), sender);
         }
+        // A _Copy button is the highlighted twin shown while its page is open, and clicking it closes the page
         private async void btnRoute_Copy_Click(object sender, EventArgs e)
         {
             if (btnLeftThin_Routes.Visible == true)

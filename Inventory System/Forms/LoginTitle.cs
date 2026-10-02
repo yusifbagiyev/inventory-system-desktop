@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Splash screen after sign-in that opens the main menu once its progress bar is full.</summary>
     public partial class LoginTitle : Form
     {
         public string fullname;
@@ -18,6 +19,7 @@ namespace Inventory_System.Forms
         public string language;
         public LoginTitle(string username, string fullname, string language)
         {
+            // The UI culture is set before InitializeComponent so the forms load the user's language from here on
             if (language == "Russian")
             {
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru-RU");

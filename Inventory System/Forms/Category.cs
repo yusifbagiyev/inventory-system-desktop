@@ -13,6 +13,7 @@ using ZXing;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Category list page with a search box and edit and delete buttons on each row.</summary>
     public partial class Category : Form
     {
         private readonly Connect connect = new Connect();
@@ -30,6 +31,7 @@ namespace Inventory_System.Forms
             try
             {
                 dgvCategory.Rows.Clear();
+                // The search box holds its placeholder as text, and that text means no filter
                 string searchText = txtSearch.Text == "Search in . . . " || txtSearch.Text == "Поиск в . . . " ? "" : txtSearch.Text;
                 string query = "SELECT * FROM Category";
                 if (!string.IsNullOrEmpty(searchText))
@@ -60,6 +62,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        // The grid shows only names, so the id is looked up by name
         private string LoadID(string text)
         {
             try
@@ -85,6 +88,7 @@ namespace Inventory_System.Forms
                 connect.CloseConnection();
             }
         }
+        // One dialog both adds and edits, so the unused button is hidden and the others take its place
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             CategoryModule categoryForm = new CategoryModule(lblFullname.Text, lblLanguage.Text);

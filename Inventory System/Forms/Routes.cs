@@ -16,6 +16,7 @@ using System.Runtime.Remoting.Contexts;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Route history page with search and a PDF export, where only admins may edit or delete a route.</summary>
     public partial class Routes : Form
     {
         private readonly Connect connect = new Connect();
@@ -122,6 +123,7 @@ namespace Inventory_System.Forms
                     {
                         if (MessageBox.Show("Are you sure you want to delete this route?", "Delete Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
+                            // The product goes back to where its latest remaining route left it
                             await SearchForMaxId(dgvRoute.Rows[e.RowIndex].Cells[0].Value.ToString());
                             cl = new SqlCommand("UPDATE Product SET Product.pdepartment=Route.ToDep,Product.pworker=Route.ToWorker,Product.pdescription=Route.Description FROM Route,Product WHERE Route.ProdCode=Product.prodCode AND Route.RouteId LIKE '" + MaxRouteId + "' ", connect.EstablishConnection(lblFullname.Text));
                             cn.ExecuteNonQuery();
@@ -163,12 +165,13 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Deletes the route and finds the latest route left for the same product.</summary>
         private async Task SearchForMaxId(string ID)
         {
             try
             {
                 cm = new SqlCommand("DELETE FROM Route WHERE RouteId LIKE '" + ID + "'", connect.EstablishConnection(lblFullname.Text));
-                // Read the product code before the row goes, so its latest remaining route can be found.
+                // Read the product code before the row goes, so its latest remaining route can be found
                 ck = new SqlCommand("SELECT ProdCode FROM Route WHERE RouteId LIKE '" + ID + "'", connect.EstablishConnection(lblFullname.Text));
                 dra = ck.ExecuteReader();
                 string SrchForPrdCode = "";
@@ -252,6 +255,7 @@ namespace Inventory_System.Forms
                             {
                                 foreach (DataGridViewCell dcell in viewRow.Cells)
                                 {
+                                    // Icon cells hold a Bitmap and their columns have no header, so both stay out of the PDF
                                     if (dcell.Value.ToString() != "System.Drawing.Bitmap")
                                     {
                                         pTable.AddCell(dcell.Value.ToString());

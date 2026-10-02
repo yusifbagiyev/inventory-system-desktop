@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Admin page for user accounts, with edit, delete and suspend buttons on each row.</summary>
     public partial class User : Form
     {
         private readonly Connect connect = new Connect();
@@ -96,6 +97,7 @@ namespace Inventory_System.Forms
                 }
                 else if (colName == "Disconnect")
                 {
+                    // Disconnect toggles the suspension, and Connect closes a suspended user's app at their next query
                     cm = new SqlCommand("SELECT suspended FROM Users WHERE ID=@ID", connect.EstablishConnection(lblFullname.Text));
                     cm.Parameters.AddWithValue("@ID", dgvUser.Rows[e.RowIndex].Cells[0].Value.ToString());
                     dr = cm.ExecuteReader();

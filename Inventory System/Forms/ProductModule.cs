@@ -18,6 +18,7 @@ using ZXing;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Dialog that adds or edits a product and makes and prints its barcode label.</summary>
     public partial class ProductModule : Form
     {
         private readonly Connect connect = new Connect();
@@ -132,6 +133,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Loads the product for a typed code, also one marked useless or lost, and then blocks saving it twice.</summary>
         private async Task ProdCodeCondition()
         {
             btnSave.Enabled = true;
@@ -211,7 +213,7 @@ namespace Inventory_System.Forms
                     cm.Parameters.AddWithValue("@pdescription", txtDesc.Text);
                     cm.ExecuteNonQuery();
 
-                    // A new product's history starts with a route from "New Inventory".
+                    // A new product's history starts with a route from New Inventory to its department
                     cn = new SqlCommand("INSERT INTO Route(prodCode,FrmDep,ToDep,ToWorker,Date,Description)VALUES(@prodCode, @FrmDep, @ToDep, @ToWorker, @Date, @Description)", connect.EstablishConnection(lblFullname.Text));
                     cn.Parameters.AddWithValue("@prodCode", txtProdCode.Text);
                     cn.Parameters.AddWithValue("@FrmDep", "New Inventory");
@@ -321,6 +323,7 @@ namespace Inventory_System.Forms
             picBarcode.Visible = false;
             await Task.Delay(10);
         }
+        // Fields left at their placeholder are saved as No Name for vendor and model and empty otherwise
         private async Task ClearItems()
         {
             if (txtVendor.Text == "Vendor" || txtVendor.Text == "" || txtVendor.Text == "Продавец")
@@ -342,6 +345,7 @@ namespace Inventory_System.Forms
             await Task.Delay(10);
         }
         private void btnExit_Click(object sender, EventArgs e)=>this.Dispose();
+        // A * in front of the code marks the product useless and a # marks it lost
         public void NotWorking_CheckedChanged(object sender, EventArgs e)
         {
             if (NotWorking.Checked == false)
@@ -445,6 +449,7 @@ namespace Inventory_System.Forms
             e.Graphics.DrawString(txtProdCode.Text, txtProdCode.Font, brush, point);
         }
         #region Design
+        // Lets the borderless dialog be dragged by its body
         private void ProductModule_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();

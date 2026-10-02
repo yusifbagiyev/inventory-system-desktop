@@ -16,6 +16,7 @@ using Font = System.Drawing.Font;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Lists a department's products and narrows them down by category, vendor and model in turn.</summary>
     public partial class SearchByDepartment : Form
     {
         private readonly Connect connect = new Connect();
@@ -65,6 +66,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Fills the category list from the department of the products in the grid.</summary>
         private async Task CountofProducts()
         {
             try
@@ -92,6 +94,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Fills the vendor list for the chosen category in that department.</summary>
         private async Task CountofProductsforVendor()
         {
             try
@@ -119,6 +122,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Fills the model list for the chosen category and vendor in that department.</summary>
         private async Task CountofProductsforModel()
         {
             try
@@ -346,6 +350,7 @@ namespace Inventory_System.Forms
                             {
                                 foreach (DataGridViewCell dcell in viewRow.Cells)
                                 {
+                                    // Icon cells hold a Bitmap and their columns have no header, so both stay out of the PDF
                                     if (dcell.Value.ToString() != "System.Drawing.Bitmap")
                                     {
                                         pTable.AddCell(dcell.Value.ToString());

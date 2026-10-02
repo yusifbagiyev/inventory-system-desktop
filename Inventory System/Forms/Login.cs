@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Sign-in window that turns away suspended users and accounts already signed in on another computer.</summary>
     public partial class Login : Form
     {
         private readonly Connect connect = new Connect();
@@ -130,6 +131,7 @@ namespace Inventory_System.Forms
         {
             try
             {
+                // Connecting to the SQL port shows which local address the server sees this machine by
                 var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(AppSettings.ServerHost, 1433);
                 var ipEndPoint = socket.LocalEndPoint as IPEndPoint;
@@ -137,7 +139,7 @@ namespace Inventory_System.Forms
             }
             catch (Exception ex)
             {
-                // No TCP route to the server, as with LocalDB over named pipes. Use this machine's own address instead.
+                // No TCP route to the server, as with LocalDB over named pipes, so fall back to this machine's address
                 Logger.WriteAllLog("System", " | Could not reach the server to read the client IP; using the local address. | " + ex.Message);
                 return Dns.GetHostAddresses(Dns.GetHostName())
                           .FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
@@ -149,6 +151,7 @@ namespace Inventory_System.Forms
             _ = CheckSession();
             if (_isSuspend != "yes")
             {
+                // Encryption is deterministic, so the encrypted input can be compared with the stored password directly
                 cm = new SqlCommand("SELECT * FROM Users WHERE fullname=@fullname AND password=@password", connect.Login());
                 var key = AppSettings.PasswordKey;
                 var user_password = Cryptography.EncryptString(key, txtPassword.Text);
@@ -213,7 +216,7 @@ namespace Inventory_System.Forms
         private void btnMinimize_Click(object sender, EventArgs e)=> this.WindowState = FormWindowState.Minimized;
         private void btnExit_Click(object sender, EventArgs e)=>Application.Exit();
         #region Design
-        // Lets the borderless window be dragged by its body.
+        // Lets the borderless window be dragged by its body
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]

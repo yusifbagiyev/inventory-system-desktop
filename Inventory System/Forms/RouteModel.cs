@@ -13,6 +13,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Dialog that records a product's move to another department or worker and moves the product with it.</summary>
     public partial class RouteModel : Form
     {
         private readonly Connect connect = new Connect();
@@ -31,6 +32,7 @@ namespace Inventory_System.Forms
             date.Value = DateTime.Now;
             this.KeyPreview = true;
         }
+        // The source fields are filled from the product and are not edited by hand
         private void DisableTexts()
         {
             txtCategory.Enabled = false;
@@ -129,7 +131,7 @@ namespace Inventory_System.Forms
                     cm.Parameters.AddWithValue("@Date", date.Text);
                     cm.Parameters.AddWithValue("@Description", txtDesc.Text);
                     cm.ExecuteNonQuery();
-                    // Move the product to the receiving department and worker.
+                    // The product itself moves to the receiving department and worker
                     string query = @"
                     UPDATE Product
                     SET 
@@ -170,6 +172,7 @@ namespace Inventory_System.Forms
                 await Task.Delay(10);
             }
         }
+        /// <summary>Shows the id the new route is expected to get, the highest one so far plus one.</summary>
         private async Task MaxRouteId()
         {
             cn = new SqlCommand("SELECT MAX(RouteId) as MAX_ID FROM Route", connect.EstablishConnection(lblFullname.Text));
@@ -187,6 +190,7 @@ namespace Inventory_System.Forms
         {
             try
             {
+                // Matches the code with or without the useless mark, but never a lost product
                 cm = new SqlCommand("SELECT prodCode,pcategory,pvendor,pmodel,pdepartment,pworker FROM Product WHERE prodCode='" + txtProdCode.Text + "' OR prodCode='*" + txtProdCode.Text + "'", connect.EstablishConnection(lblFullname.Text));
                 dr = cm.ExecuteReader();
                 while (dr.Read())
@@ -462,6 +466,7 @@ namespace Inventory_System.Forms
                 txtDesc.Text = "Description";
             }
         }
+        // Lets the borderless dialog be dragged by its body
         private void RouteModel_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();

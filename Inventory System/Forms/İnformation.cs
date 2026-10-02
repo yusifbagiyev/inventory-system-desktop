@@ -14,6 +14,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Products dashboard with counts and charts by status, then by department, category and vendor.</summary>
     public partial class İnformation : Form
     {
         private readonly Connect connect = new Connect();
@@ -28,6 +29,7 @@ namespace Inventory_System.Forms
             InitializeComponent();
             lblFullname.Text = fullname;
             lblLanguage.Text = language;
+            // The counts load before the first chart, which subtracts them from the total
             _ = CountofUselessProducts();
             _ = CountofLostProducts();
             _ = CountofAllDepartments();
@@ -177,7 +179,7 @@ namespace Inventory_System.Forms
         }
         private async Task CreateChartCategory()
         {
-            // Only categories that have products in this department.
+            // Only categories that have products in this department show up
             cm = new SqlCommand("SELECT pcategory FROM Product WHERE pdepartment=@pdepartment", connect.EstablishConnection(lblFullname.Text));
             cm.Parameters.AddWithValue("@pdepartment", cmbSearch.Text);
             dr = cm.ExecuteReader();
@@ -200,6 +202,7 @@ namespace Inventory_System.Forms
             connect.CloseConnection();
             await ChartOptionDepartment(categoryCount);
         }
+        // chart2 shows categories in series s1 and vendors in s2, one at a time
         private async Task ChartOptionDepartment(Dictionary<string, int> categoryCount)
         {
             if (lblLanguage.Text == "Russian")

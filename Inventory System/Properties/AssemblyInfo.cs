@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
-// Typelib id, used only if the assembly is exposed to COM.
+// Typelib id, used only if the assembly is exposed to COM
 [assembly: Guid("84954e9f-ad14-4db1-a712-9ceae27a9224")]
 
 [assembly: AssemblyVersion("1.0.0.0")]

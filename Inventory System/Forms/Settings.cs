@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Forms
 {
+    /// <summary>Page where the signed-in user changes their name, password and interface language.</summary>
     public partial class Settings : Form
     {
         private readonly Connect connect = new Connect();
@@ -76,6 +77,7 @@ namespace Inventory_System.Forms
                 MessageBox.Show("Password did not Match !", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            // Encryption is deterministic, so the old password is checked by encrypting what was typed
             var key = AppSettings.PasswordKey;
             var user_oldpassword = Cryptography.EncryptString(key, txtOldPass.Text);
             if (OldPassword() != user_oldpassword)
@@ -133,6 +135,7 @@ namespace Inventory_System.Forms
         }
         private void btnSave_Click(object sender, EventArgs e) => _=SaveSettings();
         private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e) => _ = LanguageOption();
+        // Password boxes unmask while they show their placeholder, so the hint stays readable
         private void txtConfirmPass_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtConfirmPass.Text))

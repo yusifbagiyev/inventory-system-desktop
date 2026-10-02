@@ -8,13 +8,15 @@ using System.Windows.Forms;
 
 namespace Inventory_System.Classes
 {
+    /// <summary>Opens the app's SQL connections and closes the app when the server is gone or the user is suspended.</summary>
     public class Connect
     {
         private readonly static string con = AppSettings.ConnectionString;
         SqlCommand cm = new SqlCommand();
         SqlDataReader dr;
-        // Connections opened through this instance, so CloseConnection can close them.
+        // Connections opened through this instance, so CloseConnection can close them
         private readonly List<SqlConnection> openConnections = new List<SqlConnection>();
+        /// <summary>Checks the user's suspension on every call, so a suspend takes effect at their next database action.</summary>
         public SqlConnection EstablishConnection(string fullname)
         {
             SqlConnection connect = new SqlConnection(con);
@@ -57,6 +59,7 @@ namespace Inventory_System.Classes
             }
             return connect;
         }
+        /// <summary>Opens a connection without the suspension check, for the sign-in window and the log.</summary>
         public SqlConnection Login()
         {
             SqlConnection connect = new SqlConnection(con);
