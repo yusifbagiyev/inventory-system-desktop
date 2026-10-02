@@ -3,7 +3,9 @@
 A Windows desktop application for tracking the IT equipment of a company: every device has an
 inventory code, belongs to a category and a department, and every move between departments or
 employees is kept as its history. It was built in 2024 for an IT department of a logistics company
-and used in production until it was replaced by a web version.
+and used in production until it was replaced by a web version:
+[microservices](https://github.com/yusifbagiyev/Inventory-Management-Microservices) first, then the
+[modular monolith](https://github.com/yusifbagiyev/Inventory-Management-Modular-Monolith) in use today.
 
 > **Portfolio copy.** Server addresses, credentials and keys were removed from the code before
 > publishing; the database connection and the password key now come from `App.config`.
@@ -80,8 +82,9 @@ Demo users (from `sample-data.sql`, with the sample key):
 
 ## What I would do differently today
 
-This was my first production application; its successor is a web application (ASP.NET Core
-modular monolith, PostgreSQL) that replaced it. Looking back at this code:
+This was my first production application; its successor is a web application
+([ASP.NET Core modular monolith, PostgreSQL](https://github.com/yusifbagiyev/Inventory-Management-Modular-Monolith))
+that replaced it. Looking back at this code:
 
 - **SQL** - several queries are built by string concatenation; they should all be parameterised
   (some already are) to rule out SQL injection.
