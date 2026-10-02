@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Inventory_System.Classes
+{
+    public class Logger
+    {
+        private static readonly string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logfile.txt");
+        public static void WriteAllLog(string fullname, string message)
+        {
+            Connect connect = new Connect();
+            try
+            {
+                SqlCommand cm = new SqlCommand("INSERT INTO Log(Time,Logs,fullname)VALUES(@Time,@Logs,@fullname)", connect.Login());
+                cm.Parameters.AddWithValue("@Time", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                cm.Parameters.AddWithValue("@Logs", message);
+                cm.Parameters.AddWithValue("@fullname", fullname);
+                cm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception: " + ex);
+            }
+            finally
+            {
+                connect.CloseConnection();
+            }
+        }
+        public static void WriteUserLog(string fullname, string message)
+        {
+            using (StreamWriter writer = new StreamWriter(logFilePath, true))
+                try
+                {
+                    // Write the log entry to the file
+                    writer.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} | User: {fullname} | {message}");
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that occur while writing logs
+                    MessageBox.Show("Error writing to log file: " + ex.Message, "Log Problem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                finally
+                {
+                    writer.Close();
+                }
+        }
+    }
+}

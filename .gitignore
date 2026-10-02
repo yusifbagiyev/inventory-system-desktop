@@ -1,0 +1,22 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+publish/
+*.application
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# NuGet packages (restored from packages.config)
+packages/
+
+# Third-party DLL that is not on NuGet (see README)
+lib/*.dll
+
+# Signing keys and local secrets
+*.pfx
+*.snk
+*.p12
+App.Local.config
