@@ -18,7 +18,6 @@ namespace Inventory_System.Forms
         public string language;
         public LoginTitle(string username, string fullname, string language)
         {
-            //Language
             if (language == "Russian")
             {
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru-RU");

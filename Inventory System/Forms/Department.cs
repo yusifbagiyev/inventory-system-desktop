@@ -31,7 +31,6 @@ namespace Inventory_System.Forms
                 dgvDepartment.Rows.Clear();
                 string searchText = txtSearch.Text == "Search in . . . " || txtSearch.Text == "Поиск в . . . " ? "" : txtSearch.Text;
                 string query = "SELECT * FROM Department";
-                // Add search conditions only if searchText is not empty
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     query += @" WHERE dname LIKE @searchText 
@@ -42,7 +41,6 @@ namespace Inventory_System.Forms
 
                 cm = new SqlCommand(query, connect.EstablishConnection(lblFullname.Text));
 
-                // Add search parameter only if searchText is not empty
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     cm.Parameters.AddWithValue("@searchText", "%" + searchText + "%");

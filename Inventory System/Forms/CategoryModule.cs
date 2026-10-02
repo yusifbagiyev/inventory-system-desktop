@@ -154,15 +154,15 @@ namespace Inventory_System.Forms
             {
                 if (btnSave.Visible != false)
                 {
-                    BtnSave_Click(this, EventArgs.Empty);  // Trigger the Click event
-                    e.SuppressKeyPress = true;  // Prevent the default behavior
-                    e.Handled = true;// Stops the event from being passed to the control
+                    BtnSave_Click(this, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
                 }
                 else
                 {
-                    BtnUpdate_Click(this, EventArgs.Empty);  // Trigger the Click event
-                    e.SuppressKeyPress = true;  // Prevent the default behavior
-                    e.Handled = true;// Stops the event from being passed to the control
+                    BtnUpdate_Click(this, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
                 }
             }
         }

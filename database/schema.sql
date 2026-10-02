@@ -1,5 +1,5 @@
--- Inventory System - SQL Server schema (reconstructed from the tables the application uses).
--- Create an empty database first, e.g.:  CREATE DATABASE InventoryDb;  then run this script in it.
+-- SQL Server schema for Inventory System, rebuilt from the tables the application uses.
+-- Run it inside an empty database, for example one made with CREATE DATABASE InventoryDb.
 
 CREATE TABLE dbo.Category (
     catId    INT IDENTITY(1,1) PRIMARY KEY,
@@ -14,10 +14,10 @@ CREATE TABLE dbo.Department (
     ddesc    NVARCHAR(600) NULL
 );
 
--- Products are linked to their category and department by name (as in the original design).
+-- Products point at their category and department by name, not by id.
 CREATE TABLE dbo.Product (
     ID           INT IDENTITY(1,1) PRIMARY KEY,
-    prodCode     NVARCHAR(100) NOT NULL,   -- inventory code printed on the label
+    prodCode     NVARCHAR(100) NOT NULL,   -- Inventory code printed on the label
     pcategory    NVARCHAR(100) NULL,
     pvendor      NVARCHAR(100) NULL,
     pmodel       NVARCHAR(100) NULL,
@@ -26,7 +26,7 @@ CREATE TABLE dbo.Product (
     pdescription NVARCHAR(600) NULL
 );
 
--- Every move of a product between departments / workers (the product's history).
+-- Every move of a product between departments and workers. Together they are the product's history.
 CREATE TABLE dbo.Route (
     RouteId     INT IDENTITY(1,1) PRIMARY KEY,
     prodCode    NVARCHAR(100) NOT NULL,
@@ -41,13 +41,13 @@ CREATE TABLE dbo.Route (
 CREATE TABLE dbo.Users (
     ID         INT IDENTITY(1,1) PRIMARY KEY,
     fullname   NVARCHAR(100) NOT NULL,
-    [password] NVARCHAR(256) NOT NULL,     -- AES-encrypted (key: PasswordKey in App.config)
-    [type]     NVARCHAR(20)  NOT NULL,     -- Admin | User
-    online     NVARCHAR(20)  NULL,         -- online | offline
-    suspended  NVARCHAR(20)  NULL,         -- enabled | disabled
-    [session]  NVARCHAR(100) NULL,         -- machine name of the active session
+    [password] NVARCHAR(256) NOT NULL,     -- AES-encrypted with PasswordKey from App.config
+    [type]     NVARCHAR(20)  NOT NULL,     -- Admin or User
+    online     NVARCHAR(20)  NULL,         -- online or offline
+    suspended  NVARCHAR(20)  NULL,         -- enabled or disabled
+    [session]  NVARCHAR(100) NULL,         -- Machine name of the active session
     ip_address NVARCHAR(50)  NULL,
-    [language] NVARCHAR(20)  NULL          -- English | Russian
+    [language] NVARCHAR(20)  NULL          -- English or Russian
 );
 
 CREATE TABLE dbo.[Log] (

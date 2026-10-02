@@ -177,7 +177,7 @@ namespace Inventory_System.Forms
         }
         private async Task CreateChartCategory()
         {
-            //we just find used category in this department
+            // Only categories that have products in this department.
             cm = new SqlCommand("SELECT pcategory FROM Product WHERE pdepartment=@pdepartment", connect.EstablishConnection(lblFullname.Text));
             cm.Parameters.AddWithValue("@pdepartment", cmbSearch.Text);
             dr = cm.ExecuteReader();
@@ -193,7 +193,7 @@ namespace Inventory_System.Forms
                 }
                 else
                 {
-                    categoryCount[categoryName] = 1; // Initialize the category with a count of 1
+                    categoryCount[categoryName] = 1;
                 }
             }
             dr.Close();
@@ -243,7 +243,7 @@ namespace Inventory_System.Forms
                 }
                 else
                 {
-                    vendorCount[vendorName] = 1; // Initialize the category with a count of 1
+                    vendorCount[vendorName] = 1;
                 }
             }
             dr.Close();

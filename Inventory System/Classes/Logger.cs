@@ -37,12 +37,10 @@ namespace Inventory_System.Classes
             using (StreamWriter writer = new StreamWriter(logFilePath, true))
                 try
                 {
-                    // Write the log entry to the file
                     writer.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} | User: {fullname} | {message}");
                 }
                 catch (Exception ex)
                 {
-                    // Handle any exceptions that occur while writing logs
                     MessageBox.Show("Error writing to log file: " + ex.Message, "Log Problem", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 finally

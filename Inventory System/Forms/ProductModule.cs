@@ -14,7 +14,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZXing;
-//using USB_Barcode_Scanner;
 
 
 namespace Inventory_System.Forms
@@ -33,16 +32,9 @@ namespace Inventory_System.Forms
             lblFullname.Text = _fullname;
             lblUserMod.Text = _usertype;
             lblLanguage.Text = _language;
-            //Language
             _ = ChangingLanguage();
             this.KeyPreview = true;
-            //BarcodeScanner barcodeScanner = new BarcodeScanner(txtProdCode);
-            //barcodeScanner.BarcodeScanned += BarcodeScanner_BarcodeScanned;
         }
-        //private void BarcodeScanner_BarcodeScanned(object sender, BarcodeScannerEventArgs e)
-        //{
-        //    txtProdCode.Text = e.Barcode;
-        //}
         private async Task ChangingLanguage()
         {
             if (lblLanguage.Text == "Russian")
@@ -219,7 +211,7 @@ namespace Inventory_System.Forms
                     cm.Parameters.AddWithValue("@pdescription", txtDesc.Text);
                     cm.ExecuteNonQuery();
 
-                    //For Route Table
+                    // A new product's history starts with a route from "New Inventory".
                     cn = new SqlCommand("INSERT INTO Route(prodCode,FrmDep,ToDep,ToWorker,Date,Description)VALUES(@prodCode, @FrmDep, @ToDep, @ToWorker, @Date, @Description)", connect.EstablishConnection(lblFullname.Text));
                     cn.Parameters.AddWithValue("@prodCode", txtProdCode.Text);
                     cn.Parameters.AddWithValue("@FrmDep", "New Inventory");
@@ -468,15 +460,15 @@ namespace Inventory_System.Forms
             {
                 if (btnSave.Visible != false)
                 {
-                    btnSave_Click(this, EventArgs.Empty);  // Trigger the Click event
-                    e.SuppressKeyPress = true;  // Prevent the default behavior
-                    e.Handled = true;// Stops the event from being passed to the control
+                    btnSave_Click(this, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
                 }
                 else
                 {
-                    btnUpdate_Click(this, EventArgs.Empty);  // Trigger the Click event
-                    e.SuppressKeyPress = true;  // Prevent the default behavior
-                    e.Handled = true;// Stops the event from being passed to the control
+                    btnUpdate_Click(this, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
                 }
             }
         }

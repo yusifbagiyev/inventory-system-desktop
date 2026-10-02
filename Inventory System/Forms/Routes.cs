@@ -24,7 +24,7 @@ namespace Inventory_System.Forms
         SqlCommand cl = new SqlCommand();
         SqlCommand ck = new SqlCommand();
         SqlDataReader dr;
-        SqlDataReader dra;//for ck command
+        SqlDataReader dra; // Reader for the ck command
         private string MaxRouteId = "";
         public Routes(string usertype, string fullname,string language)
         {
@@ -41,7 +41,6 @@ namespace Inventory_System.Forms
                 dgvRoute.Rows.Clear();
                 string searchText = txtSearch.Text == "Search in . . . " || txtSearch.Text == "Поиск в . . . " ? "" : txtSearch.Text;
                 string query = "SELECT * FROM Route ORDER BY RouteID DESC";
-                // Add search conditions only if searchText is not empty
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     query = @"SELECT * FROM Route
@@ -58,7 +57,6 @@ namespace Inventory_System.Forms
 
                 cm = new SqlCommand(query, connect.EstablishConnection(lblFullname.Text));
 
-                // Add search parameter only if searchText is not empty
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     cm.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
@@ -170,7 +168,7 @@ namespace Inventory_System.Forms
             try
             {
                 cm = new SqlCommand("DELETE FROM Route WHERE RouteId LIKE '" + ID + "'", connect.EstablishConnection(lblFullname.Text));
-                //Updating Product Table after deleting item from 
+                // Read the product code before the row goes, so its latest remaining route can be found.
                 ck = new SqlCommand("SELECT ProdCode FROM Route WHERE RouteId LIKE '" + ID + "'", connect.EstablishConnection(lblFullname.Text));
                 dra = ck.ExecuteReader();
                 string SrchForPrdCode = "";

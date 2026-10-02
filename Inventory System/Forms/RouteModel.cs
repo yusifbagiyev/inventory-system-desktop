@@ -129,7 +129,7 @@ namespace Inventory_System.Forms
                     cm.Parameters.AddWithValue("@Date", date.Text);
                     cm.Parameters.AddWithValue("@Description", txtDesc.Text);
                     cm.ExecuteNonQuery();
-                    //Updating Product Table
+                    // Move the product to the receiving department and worker.
                     string query = @"
                     UPDATE Product
                     SET 
@@ -477,15 +477,15 @@ namespace Inventory_System.Forms
             {
                 if (btnSave.Visible != false)
                 {
-                    btnSave_Click(this, EventArgs.Empty);  // Trigger the Click event
-                    e.SuppressKeyPress = true;  // Prevent the default behavior
-                    e.Handled = true;// Stops the event from being passed to the control
+                    btnSave_Click(this, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
                 }
                 else
                 {
-                    btnUpdate_Click(this, EventArgs.Empty);  // Trigger the Click event
-                    e.SuppressKeyPress = true;  // Prevent the default behavior
-                    e.Handled = true;// Stops the event from being passed to the control
+                    btnUpdate_Click(this, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
                 }
             }
         }

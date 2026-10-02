@@ -36,7 +36,6 @@ namespace Inventory_System.Forms
                 dgvProduct.Rows.Clear();
                 string searchText = txtSearch.Text == "Search in . . . " || txtSearch.Text == "Поиск в . . . " ? "" : txtSearch.Text;
                 string query = "SELECT * FROM Product ORDER BY pdepartment";
-                // Add search conditions only if searchText is not empty
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     query = @" SELECT * FROM Product 
@@ -50,7 +49,6 @@ namespace Inventory_System.Forms
                      ORDER BY pdepartment";
                 }
                 cm = new SqlCommand(query, connect.EstablishConnection(lblFullname.Text));
-                // Add search parameter only if searchText is not empty
                 if (!string.IsNullOrEmpty(searchText))
                 {
                     cm.Parameters.AddWithValue("@searchText", "%" + searchText + "%");

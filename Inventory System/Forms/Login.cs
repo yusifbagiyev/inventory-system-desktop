@@ -137,7 +137,7 @@ namespace Inventory_System.Forms
             }
             catch (Exception ex)
             {
-                // No TCP route to the server (e.g. LocalDB uses named pipes): fall back to this machine's own address.
+                // No TCP route to the server, as with LocalDB over named pipes. Use this machine's own address instead.
                 Logger.WriteAllLog("System", " | Could not reach the server to read the client IP; using the local address. | " + ex.Message);
                 return Dns.GetHostAddresses(Dns.GetHostName())
                           .FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
@@ -213,7 +213,7 @@ namespace Inventory_System.Forms
         private void btnMinimize_Click(object sender, EventArgs e)=> this.WindowState = FormWindowState.Minimized;
         private void btnExit_Click(object sender, EventArgs e)=>Application.Exit();
         #region Design
-        //To control Login Panel
+        // Lets the borderless window be dragged by its body.
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
@@ -227,9 +227,9 @@ namespace Inventory_System.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                btnLogin_Click(this, EventArgs.Empty);  // Trigger the Click event
-                e.SuppressKeyPress = true;  // Prevent the default behavior
-                e.Handled = true;// Stops the event from being passed to the control
+                btnLogin_Click(this, EventArgs.Empty);
+                e.SuppressKeyPress = true;
+                e.Handled = true;
             }
         }
         private void txtPassword_DragEnter(object sender, DragEventArgs e)

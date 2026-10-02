@@ -1,6 +1,5 @@
--- Demo data (fictional). Users' passwords are encrypted with the sample PasswordKey from App.config
--- (CHANGE-ME-32-CHARACTER-SECRETKEY):  admin / Demo-Admin-2024   and   operator / Demo-User-2024.
--- If you change PasswordKey, create users again from the application (Users > Add).
+-- Fictional demo data. The passwords use the sample PasswordKey, so sign in as admin / Demo-Admin-2024 or operator / Demo-User-2024.
+-- With a different PasswordKey these logins fail, so add the users again in the app under Users > Add.
 
 INSERT INTO dbo.Category (catname) VALUES
  (N'Notebook'), (N'Monitor'), (N'Printer'), (N'Router'), (N'Switch'), (N'IP Telephone'), (N'Access Control'), (N'UPS');

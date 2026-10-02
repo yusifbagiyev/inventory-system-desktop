@@ -20,7 +20,7 @@ namespace Inventory_System.Classes
             {
                 if (!String.IsNullOrEmpty(fullname))
                 {
-                    connect.Open(); // Attempt to open the connection
+                    connect.Open();
                     string isSuspend = "";
                     string query = @"SELECT suspended FROM Users WHERE fullname=@fullname";
                     cm = new SqlCommand(query, connect);
@@ -38,7 +38,7 @@ namespace Inventory_System.Classes
                     }
                 }
             }
-            catch (Exception ex) // Catch any SQL-related exceptions
+            catch (Exception ex)
             {
                 MessageBox.Show("No Connection", "Server Problem", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (MessageBox.Show("Do you want to reconnect to the server?", "Recover Connection", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -47,7 +47,7 @@ namespace Inventory_System.Classes
                 }
                 else
                 {
-                    connect = null; // Set connection to null if there's an error
+                    connect = null;
                     Logger.WriteUserLog(fullname, " | could not connect to the Server. | Error: " + ex.Message);
                     Application.Exit();
                 }
@@ -59,12 +59,12 @@ namespace Inventory_System.Classes
             SqlConnection connect = new SqlConnection(con);
             try
             {
-                connect.Open(); // Attempt to open the connection
+                connect.Open();
             }
-            catch // Catch any SQL-related exceptions
+            catch
             {
                 MessageBox.Show("No Connection", "Server Problem", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                connect = null; // Set connection to null if there's an error
+                connect = null;
                 Application.Exit();
             }
             return connect;

@@ -23,7 +23,6 @@ namespace Inventory_System.Forms
         public Main_Menu(string language)
         {
             InitializeComponent();
-            //Language 
             if (language == "Russian")
             {
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru-RU");
@@ -206,12 +205,11 @@ namespace Inventory_System.Forms
             btnLeftThin_Settings.Visible = false;
             await Task.Delay(10);
         }
-        //To control Menu Panel
+        // Lets the borderless window be dragged by its body or top bar.
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        //fucntion to open menus
         private void Main_Menu_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
