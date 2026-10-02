@@ -8,11 +8,6 @@ and used in production until it was replaced by a web version.
 > **Portfolio copy.** Server addresses, credentials and keys were removed from the code before
 > publishing; the database connection and the password key now come from `App.config`.
 
-## Screenshots
-
-<!-- Add screenshots to docs/screenshots/ and reference them here, e.g.
-![Products](docs/screenshots/products.png) -->
-
 ## Features
 
 - **Products** - register IT equipment with inventory code, category, vendor, model, department and
