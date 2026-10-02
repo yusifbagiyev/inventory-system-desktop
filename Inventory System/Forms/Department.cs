@@ -72,7 +72,8 @@ namespace Inventory_System.Forms
             try
             {
                 var depID = "";
-                cm = new SqlCommand("SELECT depID FROM Department WHERE dname=N'" + text + "'", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("SELECT depID FROM Department WHERE dname=@dname", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@dname", text);
                 dr = cm.ExecuteReader();
                 while (dr.Read())
                 {
@@ -117,7 +118,8 @@ namespace Inventory_System.Forms
                 {
                     if (MessageBox.Show("Are you sure you want to delete this department?", "Delete Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        cm = new SqlCommand("DELETE FROM Department WHERE depID LIKE '" + LoadID(dgvDepartment.Rows[e.RowIndex].Cells[0].Value.ToString()) + "'", connect.EstablishConnection(lblFullname.Text));
+                        cm = new SqlCommand("DELETE FROM Department WHERE depID LIKE @depID", connect.EstablishConnection(lblFullname.Text));
+                        cm.Parameters.AddWithValue("@depID", LoadID(dgvDepartment.Rows[e.RowIndex].Cells[0].Value.ToString()));
                         cm.ExecuteNonQuery();
                         MessageBox.Show("Record has been successfully deleted!");
                         Logger.WriteUserLog(lblFullname.Text, " deleted a department with Department_Name [" + dgvDepartment.Rows[e.RowIndex].Cells[0].Value.ToString() + "] from Department Table");

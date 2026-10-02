@@ -113,7 +113,8 @@ namespace Inventory_System.Forms
             try
             {
                 var product_id = "";
-                cm = new SqlCommand("SELECT ID FROM Product WHERE prodCode LIKE '" + txtProdCode.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("SELECT ID FROM Product WHERE prodCode LIKE @prodCode", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@prodCode", txtProdCode.Text);
                 dr = cm.ExecuteReader();
                 while (dr.Read())
                 {
@@ -149,7 +150,8 @@ namespace Inventory_System.Forms
             }
             try
             {
-                cm = new SqlCommand("SELECT prodCode,pcategory,pvendor,pmodel,pdepartment,pworker,pdescription FROM Product WHERE prodCode= N'" + txtProdCode.Text + "' OR prodCode='*" + txtProdCode.Text + "' OR prodCode='#" + txtProdCode.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("SELECT prodCode,pcategory,pvendor,pmodel,pdepartment,pworker,pdescription FROM Product WHERE prodCode= @prodCode OR prodCode='*' + @prodCode OR prodCode='#' + @prodCode", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@prodCode", txtProdCode.Text);
                 dr = cm.ExecuteReader();
                 while (dr.Read())
                 {
@@ -253,7 +255,8 @@ namespace Inventory_System.Forms
         {
             try
             {
-                cn = new SqlCommand("SELECT prodCode,pcategory,pvendor,pmodel,pdepartment,pworker,pdescription FROM Product WHERE ID LIKE N'" + prod_id.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                cn = new SqlCommand("SELECT prodCode,pcategory,pvendor,pmodel,pdepartment,pworker,pdescription FROM Product WHERE ID LIKE @ID", connect.EstablishConnection(lblFullname.Text));
+                cn.Parameters.AddWithValue("@ID", prod_id.Text);
                 dr = cn.ExecuteReader();
                 if (dr.HasRows != false)
                 {
@@ -265,7 +268,8 @@ namespace Inventory_System.Forms
                     if (MessageBox.Show("Are you sure you want to update this product?", "Update Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         await ClearItems();
-                        cm = new SqlCommand("UPDATE Product SET prodCode = @prodCode,pcategory=@pcategory, pvendor=@pvendor ,pmodel=@pmodel, pdepartment=@pdepartment , pworker=@pworker, pdescription=@pdescription WHERE ID LIKE N'" + prod_id.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                        cm = new SqlCommand("UPDATE Product SET prodCode = @prodCode,pcategory=@pcategory, pvendor=@pvendor ,pmodel=@pmodel, pdepartment=@pdepartment , pworker=@pworker, pdescription=@pdescription WHERE ID LIKE @ID", connect.EstablishConnection(lblFullname.Text));
+                        cm.Parameters.AddWithValue("@ID", prod_id.Text);
                         cm.Parameters.AddWithValue("@prodCode", txtProdCode.Text);
                         cm.Parameters.AddWithValue("@pcategory", cmbCat.Text);
                         cm.Parameters.AddWithValue("@pvendor", txtVendor.Text);

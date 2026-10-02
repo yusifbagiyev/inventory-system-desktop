@@ -125,7 +125,8 @@ namespace Inventory_System.Forms
                         {
                             // The product goes back to where its latest remaining route left it
                             await SearchForMaxId(dgvRoute.Rows[e.RowIndex].Cells[0].Value.ToString());
-                            cl = new SqlCommand("UPDATE Product SET Product.pdepartment=Route.ToDep,Product.pworker=Route.ToWorker,Product.pdescription=Route.Description FROM Route,Product WHERE Route.ProdCode=Product.prodCode AND Route.RouteId LIKE '" + MaxRouteId + "' ", connect.EstablishConnection(lblFullname.Text));
+                            cl = new SqlCommand("UPDATE Product SET Product.pdepartment=Route.ToDep,Product.pworker=Route.ToWorker,Product.pdescription=Route.Description FROM Route,Product WHERE Route.ProdCode=Product.prodCode AND Route.RouteId LIKE @RouteId", connect.EstablishConnection(lblFullname.Text));
+                            cl.Parameters.AddWithValue("@RouteId", MaxRouteId);
                             cn.ExecuteNonQuery();
                             cl.ExecuteNonQuery();
                             await Task.Delay(100);
@@ -170,9 +171,11 @@ namespace Inventory_System.Forms
         {
             try
             {
-                cm = new SqlCommand("DELETE FROM Route WHERE RouteId LIKE '" + ID + "'", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("DELETE FROM Route WHERE RouteId LIKE @RouteId", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@RouteId", ID);
                 // Read the product code before the row goes, so its latest remaining route can be found
-                ck = new SqlCommand("SELECT ProdCode FROM Route WHERE RouteId LIKE '" + ID + "'", connect.EstablishConnection(lblFullname.Text));
+                ck = new SqlCommand("SELECT ProdCode FROM Route WHERE RouteId LIKE @RouteId", connect.EstablishConnection(lblFullname.Text));
+                ck.Parameters.AddWithValue("@RouteId", ID);
                 dra = ck.ExecuteReader();
                 string SrchForPrdCode = "";
                 while (dra.Read())
@@ -182,7 +185,8 @@ namespace Inventory_System.Forms
                 dra.Close();
                 cm.ExecuteNonQuery();
                 ck.ExecuteNonQuery();
-                cn = new SqlCommand("SELECT MAX(RouteId) FROM Route WHERE ProdCode LIKE'" + SrchForPrdCode + "' ", connect.EstablishConnection(lblFullname.Text));
+                cn = new SqlCommand("SELECT MAX(RouteId) FROM Route WHERE ProdCode LIKE @ProdCode", connect.EstablishConnection(lblFullname.Text));
+                cn.Parameters.AddWithValue("@ProdCode", SrchForPrdCode);
                 dr = cn.ExecuteReader();
                 while (dr.Read())
                 {

@@ -68,7 +68,8 @@ namespace Inventory_System.Forms
             try
             {
                 var catid = "";
-                cm = new SqlCommand("SELECT catID FROM Category WHERE catname=N'" + text + "'", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("SELECT catID FROM Category WHERE catname=@catname", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@catname", text);
                 dr = cm.ExecuteReader();
                 while (dr.Read())
                 {
@@ -121,7 +122,8 @@ namespace Inventory_System.Forms
                 {
                     if (MessageBox.Show("Are you sure you want to delete this category?", "Delete Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        cm = new SqlCommand("DELETE FROM Category WHERE catId LIKE '" + LoadID(dgvCategory.Rows[e.RowIndex].Cells[0].Value.ToString()) + "'", connect.EstablishConnection(lblFullname.Text));
+                        cm = new SqlCommand("DELETE FROM Category WHERE catId LIKE @catId", connect.EstablishConnection(lblFullname.Text));
+                        cm.Parameters.AddWithValue("@catId", LoadID(dgvCategory.Rows[e.RowIndex].Cells[0].Value.ToString()));
                         cm.ExecuteNonQuery();
                         connect.CloseConnection();
                         MessageBox.Show("Record has been successfully deleted!");

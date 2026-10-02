@@ -460,7 +460,8 @@ namespace Inventory_System.Forms
         {
             try
             {
-                cm = new SqlCommand("UPDATE Users SET online=@online, ip_address=@ip_address,session=@session WHERE fullname LIKE N'" + lblFullname.Text + "'", connect.Login());
+                cm = new SqlCommand("UPDATE Users SET online=@online, ip_address=@ip_address,session=@session WHERE fullname LIKE @fullname", connect.Login());
+                cm.Parameters.AddWithValue("@fullname", lblFullname.Text);
                 cm.Parameters.AddWithValue("@session", "");
                 cm.Parameters.AddWithValue("@ip_address", "");
                 cm.Parameters.AddWithValue("@online", "offline");

@@ -58,6 +58,8 @@ namespace Inventory_System.Forms
         }
         private async Task SearchForSuspend()
         {
+            // Reset, or a suspension read for an earlier name would stick
+            _isSuspend = null;
             try
             {
                 cm = new SqlCommand("SELECT suspended FROM Users WHERE fullname = @fullname", connect.Login());
@@ -149,7 +151,7 @@ namespace Inventory_System.Forms
         {
             _=SearchForSuspend();
             _ = CheckSession();
-            if (_isSuspend != "yes")
+            if (_isSuspend != "disabled")
             {
                 // Encryption is deterministic, so the encrypted input can be compared with the stored password directly
                 cm = new SqlCommand("SELECT * FROM Users WHERE fullname=@fullname AND password=@password", connect.Login());
@@ -198,6 +200,8 @@ namespace Inventory_System.Forms
                         else
                         {
                             MessageBox.Show("You logged in another computer with this hostname: " + _haveSession, "User Active", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            dr.Close();
+                            connect.CloseConnection();
                             return;
                         }
                     }

@@ -191,7 +191,8 @@ namespace Inventory_System.Forms
             try
             {
                 // Matches the code with or without the useless mark, but never a lost product
-                cm = new SqlCommand("SELECT prodCode,pcategory,pvendor,pmodel,pdepartment,pworker FROM Product WHERE prodCode='" + txtProdCode.Text + "' OR prodCode='*" + txtProdCode.Text + "'", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("SELECT prodCode,pcategory,pvendor,pmodel,pdepartment,pworker FROM Product WHERE prodCode=@prodCode OR prodCode='*' + @prodCode", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@prodCode", txtProdCode.Text);
                 dr = cm.ExecuteReader();
                 while (dr.Read())
                 {

@@ -34,7 +34,8 @@ namespace Inventory_System.Forms
         {
             try
             {
-                cm = new SqlCommand("SELECT catId,catname FROM Category WHERE catname LIKE N'" + txtCatName.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("SELECT catId,catname FROM Category WHERE catname LIKE @catname", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@catname", txtCatName.Text);
                 dr = cm.ExecuteReader();
                 if (dr.HasRows == true)
                 {
@@ -91,7 +92,8 @@ namespace Inventory_System.Forms
                 }
                 if (MessageBox.Show("Are you sure you want to update this category?", "Update Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    cm = new SqlCommand("UPDATE Category SET catname = @catname WHERE catId LIKE N'" + txtCatId.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                    cm = new SqlCommand("UPDATE Category SET catname = @catname WHERE catId LIKE @catId", connect.EstablishConnection(lblFullname.Text));
+                    cm.Parameters.AddWithValue("@catId", txtCatId.Text);
                     cm.Parameters.AddWithValue("@catname", txtCatName.Text);
                     cm.ExecuteNonQuery();
                     MessageBox.Show("Category has been successfully updated!");

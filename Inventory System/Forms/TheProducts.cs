@@ -112,15 +112,14 @@ namespace Inventory_System.Forms
                     {
                         if (MessageBox.Show("Are you sure you want to delete this product?", "Delete Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            cm = new SqlCommand("DELETE FROM Product WHERE prodCode LIKE '" + dgvProduct.Rows[e.RowIndex].Cells[0].Value.ToString() + "'", connect.EstablishConnection(lblFullname.Text));
+                            cm = new SqlCommand("DELETE FROM Product WHERE prodCode LIKE @prodCode", connect.EstablishConnection(lblFullname.Text));
+                            cm.Parameters.AddWithValue("@prodCode", dgvProduct.Rows[e.RowIndex].Cells[0].Value.ToString());
                             cm.ExecuteNonQuery();
+                            connect.CloseConnection();
                             MessageBox.Show("Record has been successfully deleted!");
 
                             Logger.WriteUserLog(lblFullname.Text, " deleted a product with Product_Code [" + dgvProduct.Rows[e.RowIndex].Cells[0].Value.ToString() + "] from Product Table");
                             Logger.WriteAllLog(lblFullname.Text, " deleted a product with Product_Code [" + dgvProduct.Rows[e.RowIndex].Cells[0].Value.ToString() + "] from Product Table");
-
-                            cm = new SqlCommand("SELECT * FROM Recycle WHERE prodCode LIKE '" + dgvProduct.Rows[e.RowIndex].Cells[0].Value.ToString() + "' ", connect.EstablishConnection(lblFullname.Text));
-                            cm.ExecuteNonQuery();
                         }
                         await LoadProduct();
                     }

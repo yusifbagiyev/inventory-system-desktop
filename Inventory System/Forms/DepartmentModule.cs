@@ -56,7 +56,8 @@ namespace Inventory_System.Forms
         {
             try
             {
-                cm = new SqlCommand("SELECT depID,dname,dhead,dcontact,ddesc FROM Department WHERE dname LIKE N'" + txtDepName.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                cm = new SqlCommand("SELECT depID,dname,dhead,dcontact,ddesc FROM Department WHERE dname LIKE @dname", connect.EstablishConnection(lblFullname.Text));
+                cm.Parameters.AddWithValue("@dname", txtDepName.Text);
                 dr = cm.ExecuteReader();
                 if (dr.HasRows == true)
                 {
@@ -116,7 +117,8 @@ namespace Inventory_System.Forms
                 if (MessageBox.Show("Are you sure you want to update this department?", "Update Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     await ClearItems();
-                    cm = new SqlCommand("UPDATE Department SET dname = @dname,dhead=@dhead, dcontact=@dcontact, ddesc=@ddesc WHERE depID LIKE '" + lblDepId.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                    cm = new SqlCommand("UPDATE Department SET dname = @dname,dhead=@dhead, dcontact=@dcontact, ddesc=@ddesc WHERE depID LIKE @depID", connect.EstablishConnection(lblFullname.Text));
+                    cm.Parameters.AddWithValue("@depID", lblDepId.Text);
                     cm.Parameters.AddWithValue("@dname", txtDepName.Text);
                     cm.Parameters.AddWithValue("@dhead", txtDepHead.Text);
                     cm.Parameters.AddWithValue("@dcontact", txtDepCont.Text);

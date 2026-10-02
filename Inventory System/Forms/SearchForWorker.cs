@@ -64,7 +64,8 @@ namespace Inventory_System.Forms
                 if (!String.IsNullOrEmpty(dgvProduct.Rows[0].Cells[5].Value.ToString()))
                 {
                     cmbResult.Items.Clear();
-                    cm = new SqlCommand("SELECT DISTINCT pcategory FROM Product WHERE pworker LIKE N'" + dgvProduct.Rows[0].Cells[5].Value.ToString() + "' ", connect.EstablishConnection(lblFullname.Text));
+                    cm = new SqlCommand("SELECT DISTINCT pcategory FROM Product WHERE pworker LIKE @pworker", connect.EstablishConnection(lblFullname.Text));
+                    cm.Parameters.AddWithValue("@pworker", dgvProduct.Rows[0].Cells[5].Value.ToString());
                     dr = cm.ExecuteReader();
                     while (dr.Read())
                     {
@@ -92,7 +93,9 @@ namespace Inventory_System.Forms
                 if (!String.IsNullOrEmpty(cmbResult.Text))
                 {
                     cmbVendor.Items.Clear();
-                    cm = new SqlCommand("SELECT DISTINCT pvendor FROM Product WHERE pworker LIKE N'" + dgvProduct.Rows[0].Cells[5].Value.ToString() + "' AND pcategory LIKE N'" + cmbResult.Text + "' ", connect.EstablishConnection(lblFullname.Text));
+                    cm = new SqlCommand("SELECT DISTINCT pvendor FROM Product WHERE pworker LIKE @pworker AND pcategory LIKE @pcategory", connect.EstablishConnection(lblFullname.Text));
+                    cm.Parameters.AddWithValue("@pworker", dgvProduct.Rows[0].Cells[5].Value.ToString());
+                    cm.Parameters.AddWithValue("@pcategory", cmbResult.Text);
                     dr = cm.ExecuteReader();
                     while (dr.Read())
                     {
@@ -120,7 +123,10 @@ namespace Inventory_System.Forms
                 if (!String.IsNullOrEmpty(cmbVendor.Text))
                 {
                     cmbModel.Items.Clear();
-                    cm = new SqlCommand("SELECT DISTINCT pmodel FROM Product WHERE pworker LIKE N'" + dgvProduct.Rows[0].Cells[5].Value.ToString() + "' AND pcategory LIKE N'" + cmbResult.Text + "' AND pvendor LIKE N'" + cmbVendor.Text + "'", connect.EstablishConnection(lblFullname.Text));
+                    cm = new SqlCommand("SELECT DISTINCT pmodel FROM Product WHERE pworker LIKE @pworker AND pcategory LIKE @pcategory AND pvendor LIKE @pvendor", connect.EstablishConnection(lblFullname.Text));
+                    cm.Parameters.AddWithValue("@pworker", dgvProduct.Rows[0].Cells[5].Value.ToString());
+                    cm.Parameters.AddWithValue("@pcategory", cmbResult.Text);
+                    cm.Parameters.AddWithValue("@pvendor", cmbVendor.Text);
                     dr = cm.ExecuteReader();
                     while (dr.Read())
                     {
